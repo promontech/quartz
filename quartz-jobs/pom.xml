@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.quartz-scheduler</groupId>
     <artifactId>quartz-parent</artifactId>
-    <version>2.2.3</version>
+    <version>2.2.4-SNAPSHOT</version>
   </parent>
 
   <groupId>org.quartz-scheduler</groupId>
@@ -82,7 +82,7 @@
         <artifactId>maven-javadoc-plugin</artifactId>
         <version>2.9</version>
         <configuration>
-          <skip>${skipJavadoc}</skip>
+          <skip>true</skip>
           <quiet>true</quiet>
           <doctitle>Quartz Enterprise Job Scheduler ${project.version} - Utility jobs</doctitle>
           <windowtitle>Quartz Enterprise Job Scheduler ${project.version} - Utility jobs</windowtitle>

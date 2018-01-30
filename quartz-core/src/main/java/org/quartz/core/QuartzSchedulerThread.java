@@ -18,6 +18,7 @@
 
 package org.quartz.core;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -275,6 +276,13 @@ public class QuartzSchedulerThread extends Thread {
                         if (log.isDebugEnabled()) 
                             log.debug("batch acquisition of " + (triggers == null ? 0 : triggers.size()) + " triggers");
                     } catch (JobPersistenceException jpe) {
+                        if (jpe.getCause() instanceof SQLException) {
+                            SQLException sqe = (SQLException) jpe.getCause();
+                            log.error("Caught SQLException: Reason:" + sqe.getMessage());
+                            log.error("Caught SQLException: SQlState:" + sqe.getSQLState());
+                            log.error("Shutting down ... as I can't recover from SQLException");
+                            System.exit(sqe.getErrorCode());
+                        }
                         if(!lastAcquireFailed) {
                             qs.notifySchedulerListenersError(
                                 "An error occurred while scanning for the next triggers to fire.",
